@@ -1,10 +1,12 @@
 const express = require("express")
 const bodyParser = require('body-parser');
+const cors = require("cors");
 const fs = require("fs")
 const app = express()
 const port = 3006
-
+const path = require("path"); 
 app.use(bodyParser.json());
+app.use(cors()); 
 
 app.get('/todos',(req,res)=> {
   fs.readFile("todos.json","utf-8", (err,data) =>{
@@ -70,7 +72,15 @@ app.delete("/todos/:id", (req,res) => {
     })
 })
 
+app.get("/",(req,res) => {
+    res.sendFile(path.join(__dirname, ("index.html")));
+})
 
+// for all other routes return 404
+// app.use((req,res,next) => {
+//     res.status(404).send();
+// })
+ 
 function started(){
     console.log(`yeah the hard todo is runnning on port ${port}`)
 }

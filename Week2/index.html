@@ -1,8 +1,98 @@
 <head>
     <title>
-        hello from anil
+        Todo App 
     </title>
 </head>
 <body>
-    <b>hi everyone</b>
+     Title :
+     <input type="text" id="title1">
+     <br> <br>
+     Description :
+     <input type="text" id="description1">
+     <br> <br>
+     <button onclick="onPress()">send todo</button>
+      <div id="mainArea">
+           
+      </div>
 </body>
+<script>
+
+    function todosCallBack(data){
+        console.log(data);
+        var parentElement = document.getElementById("mainArea");
+       // parentElement.innerHTML = JSON.stringify(data);
+       for(var i=0; i<data.length; i++){
+        var childElement = document.createElement("div");
+
+        var grandChildElement1 = document.createElement("span");
+        grandChildElement1.innerHTML = data[i].title
+       
+        var grandChildElement2 = document.createElement("span");
+        grandChildElement2.innerHTML = data[i].description
+
+        var grandChildElement3 = document.createElement("button");
+        grandChildElement3.innerHTML = "Delete"
+
+        childElement.appendChild(grandChildElement1)
+        childElement.appendChild(grandChildElement2)
+        childElement.appendChild(grandChildElement3)
+
+        parentElement.appendChild(childElement); 
+ 
+       }
+    
+    }
+
+     function callback2(resp){
+        resp.json().then(todosCallBack);
+     }
+    function getData(){
+        fetch("http://localhost:3000/todos",{
+            method: "GET",
+        }).then(callback2)
+    }
+    getData();
+
+    function onPress() {
+        console.log("Send button clicked");
+        const title = document.getElementById("title1").value;
+        const description =  document.getElementById("description1").value;
+    
+        fetch("http://localhost:3000/todos", {
+            method: "POST",
+            body: JSON.stringify({
+                 title:title,
+                description:description}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(callback)
+    }
+    
+
+    function callback(resp){
+        resp.json().then(parsedResponse);
+    }
+    function parsedResponse(data){  
+        console.log(data);
+        var parentElement = document.getElementById("mainArea");
+        var childElement = document.createElement("div");
+
+        var grandChildElement1 = document.createElement("span");
+        grandChildElement1.innerHTML = data.title
+       
+        var grandChildElement2 = document.createElement("span");
+        grandChildElement2.innerHTML = data.description
+
+        var grandChildElement3 = document.createElement("button");
+        grandChildElement3.innerHTML = "Delete"
+
+        childElement.appendChild(grandChildElement1)
+        childElement.appendChild(grandChildElement2)
+        childElement.appendChild(grandChildElement3)
+
+        parentElement.appendChild(childElement); 
+ 
+    }
+</script>
