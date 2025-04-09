@@ -18,6 +18,21 @@ app.get('/todos',(req,res)=> {
 })
 
 
+function findIndex(arr, id) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].id === id) return i;
+    }
+    return -1;
+  }
+  
+  function removeAtIndex(arr, index) {
+    let newArray = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (i !== index) newArray.push(arr[i]);
+    }
+    return newArray;
+  }
+
 // create new todo 
 app.post('/todos', (req, res) => {
     const newTodo = {
@@ -43,6 +58,26 @@ app.post('/todos', (req, res) => {
             res.status(201).json(newTodo);  // ✅ Properly respond only after write
         });
     });
+});
+
+
+// delete the todo 
+app.delete('/todos/:id', (req, res) => {
+
+  fs.readFile("TodoApp.json", "utf8", (err, data) => {
+    if (err) throw err;
+    let todos = JSON.parse(data);
+    const todoIndex = findIndex(todos, parseInt(req.params.id));
+    if (todoIndex === -1) {
+      res.status(404).send();
+    } else {
+      todos = removeAtIndex(todos, todoIndex);
+      fs.writeFile("TodoApp.json", JSON.stringify(todos), (err) => {
+        if (err) throw err;
+        res.status(200).send();
+      });
+    }
+  });
 });
 
 
