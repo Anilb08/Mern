@@ -1,5 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const cors = require("cors");
 const mongoose = require('mongoose');
 const app = express();
 

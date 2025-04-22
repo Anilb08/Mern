@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require("fs");
-const port = 3005;
+const port = 3000;
 
 const app = express();
 
@@ -74,6 +74,6 @@ app.use((req, res, next) => {
 
 
 function started(){
-    console.log(`yeah this is the todohard port : ${port}`)
+    console.log(`yeah this is the todo hard port : ${port}`)
 }
 app.listen(port, started);
