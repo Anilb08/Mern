@@ -4,6 +4,7 @@ import Login from "./components/Login"
 import Navbar from "./components/Navbar"
 import Register from "./components/Register"
 import AddCourse from './components/AddCourse';
+import Courses from './components/Courses';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Navbar/>
         <Routes>
         <Route path="/addcourse" element={<AddCourse />} />
+        <Route path="/courses" element={<Courses />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/login" element={<Login/>} />
        

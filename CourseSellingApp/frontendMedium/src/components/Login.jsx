@@ -59,11 +59,9 @@ function Login(){
         <br/>
         <Button variant="contained"
          onClick={()=> {
-            function callback3(){
-                alert("You logged successfully")
-            }
+            
             function callback2(data){
-                console.log(data).then(callback3)
+                console.log(data)
             }
             function callback1(res){
                  res.json().then(callback2)
@@ -71,11 +69,12 @@ function Login(){
             fetch("http://localhost:3000/admin/login",{
                 method:"POST",
                 body:JSON.stringify({
-                    username : email,
-                    password2 : password
+                     email,
+                     password
                 }),
                 headers: {
-                    "Content-Type":"application/json"
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer "+localStorage.getItem("token")
                 }
 
             }) .then(callback1)

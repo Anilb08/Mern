@@ -7,6 +7,7 @@ import { useState } from 'react';
 function AddCourse() {
     const [title,setTitle] = useState("")
     const [description,setDescription] = useState("")
+
   return (
    <div style={{
     marginTop :"30px"
@@ -14,28 +15,28 @@ function AddCourse() {
      <Card variant="outlined" style={{ width: 400, padding: 20, margin: "auto" }}>
       <Box display="flex" flexDirection="column" gap={2}>
         <TextField
-        onChange={()=> {
-            e => setTitle(e.target.value)
+        onChange={(e)=> {
+             setTitle(e.target.value)
         }}
          label="Title" variant="outlined" />
         <TextField 
-         onChange={()=> {
-            e => setDescription(e.target.value)
+         onChange={(e)=> {
+           setDescription(e.target.value)
         }}
         label="Description" variant="outlined" />
         <Button
         onClick={()=>{
             function callback2(data){  
-                localStorage.setItem("token",data.token)
+                alert("Course added !")
                 console.log(data);
             }
             function callback1(res){
-                 res.json().then(callback2)
+                 res.json().then(callback2);
             }
             
             fetch("http://localhost:3000/admin/courses",{
                 method:"POST",
-                body:JSON.stringify({
+                body:JSON.stringify({ 
                     title: title,
                     description: description,
                     imageLink:"", 
