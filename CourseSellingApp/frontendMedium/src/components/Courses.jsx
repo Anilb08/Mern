@@ -1,3 +1,4 @@
+import { Card, Typography } from "@mui/material";
 import { useEffect, useState } from "react"
 
 function Courses(){
@@ -17,13 +18,8 @@ function Courses(){
              }
      
          }) .then(callback1)
-    },[])
-    return <div>
-      Courses 
-      {/* map to iterate */}
-      {/* {courses.map(course => {
-        return <Course course={course}/>
-      })} */}
+    },[]) 
+    return <div style={{ display: "flex",flexWrap:"wrap"}}>
       {courses.map(course => {
        return <Course key={course.id} course={course} />; // or course._id
       })}
@@ -31,12 +27,19 @@ function Courses(){
 }
 
 
-function Course(props){
-  return <div>
-    {props.course.title}
-    {props.course.description}
-  </div>
-}
+ export function Course(props){
+  return <Card style={{
+    border: "2px solid black",
+    margin: 10,
+    width: 300, 
+    minHeight: 200 
+  }}>
+    <Typography textAlign={"center"} variant="h5">{props.course.title}</Typography>
+    <Typography textAlign={"center"}  variant="subtitle1"> {props.course.description} </Typography>
+    <img src={props.course.imageLink} style={{width:300  }}></img>
+   
+  </Card>
+}  
 
 
 
